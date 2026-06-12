@@ -1,0 +1,6 @@
+export { default as Admin } from './Admin'
+export { default as Dentist } from './Dentist'
+export { default as Patient } from './Patient'
+export { default as Appointment } from './Appointment'
+export { default as BeforeAfterCase } from './BeforeAfterCase'
+export { default as ContactMessage } from './ContactMessage'
