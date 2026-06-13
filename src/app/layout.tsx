@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   keywords: ["dental clinic", "dentist", "teeth whitening", "dental implants", "braces", "root canal", "dental care", "orthodontics"],
   authors: [{ name: "BrightSmile Dental Clinic" }],
   icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+    icon: "/logo.svg",
   },
   openGraph: {
     title: "BrightSmile Dental Clinic",
