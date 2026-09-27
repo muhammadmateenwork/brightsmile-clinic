@@ -1,6 +1,14 @@
 import mongoose from 'mongoose'
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://muhammadmateen543_db_user:83ACH4vG@cluster0.7wvjxw8.mongodb.net/dental_clinic?appName=Cluster0'
+function getMongoUri(): string {
+  const uri = process.env.MONGODB_URI
+  if (!uri) {
+    throw new Error('MONGODB_URI environment variable is not set. Add it to .env.local')
+  }
+  return uri
+}
+
+const MONGODB_URI = getMongoUri()
 
 interface MongooseCache {
   conn: typeof mongoose | null
@@ -110,9 +118,33 @@ const ContactMessageSchema = new mongoose.Schema({
   phone: { type: String, default: '' },
   subject: { type: String, required: true },
   message: { type: String, required: true },
-}, { 
+}, {
   timestamps: true,
   collection: 'ContactMessage'
+})
+
+// ChatMessage sub-schema (embedded in ChatConversation)
+const ChatMessageSchema = new mongoose.Schema({
+  role: { type: String, enum: ['user', 'assistant'], required: true },
+  content: { type: String, required: true },
+}, {
+  timestamps: { createdAt: true, updatedAt: false },
+  _id: false,
+})
+
+// ChatConversation Schema - AI receptionist widget conversations
+const ChatConversationSchema = new mongoose.Schema({
+  sessionId: { type: String, required: true, unique: true },
+  messages: { type: [ChatMessageSchema], default: [] },
+  patientName: { type: String, default: '' },
+  patientPhone: { type: String, default: '' },
+  status: { type: String, enum: ['active', 'handoff', 'booked', 'resolved'], default: 'active' },
+  handoffReason: { type: String, default: '' },
+  appointmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Appointment', default: null },
+  lastMessageAt: { type: Date, default: Date.now },
+}, {
+  timestamps: true,
+  collection: 'ChatConversation'
 })
 
 // Export models (prevent OverwriteModelError in dev) with strict 3rd arguments
@@ -122,3 +154,4 @@ export const Patient = mongoose.models.Patient || mongoose.model('Patient', Pati
 export const Appointment = mongoose.models.Appointment || mongoose.model('Appointment', AppointmentSchema, 'Appointment')
 export const BeforeAfterCase = mongoose.models.BeforeAfterCase || mongoose.model('BeforeAfterCase', BeforeAfterCaseSchema, 'BeforeAfterCase')
 export const ContactMessage = mongoose.models.ContactMessage || mongoose.model('ContactMessage', ContactMessageSchema, 'ContactMessage')
+export const ChatConversation = mongoose.models.ChatConversation || mongoose.model('ChatConversation', ChatConversationSchema, 'ChatConversation')

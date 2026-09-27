@@ -6,6 +6,7 @@ import {
   Users,
   CalendarDays,
   UserCheck,
+  MessageCircle,
   LogOut,
   X,
   Menu,
@@ -28,6 +29,7 @@ const navItems = [
   { id: 'dentists', label: 'Dentists', icon: Users },
   { id: 'appointments', label: 'Appointments', icon: CalendarDays },
   { id: 'patients', label: 'Patients', icon: UserCheck },
+  { id: 'chats', label: 'AI Chats', icon: MessageCircle },
 ]
 
 export default function AdminSidebar({

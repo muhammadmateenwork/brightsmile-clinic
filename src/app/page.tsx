@@ -18,11 +18,13 @@ import DashboardStats from '@/components/admin/DashboardStats'
 import DentistManagement from '@/components/admin/DentistManagement'
 import AppointmentManagement from '@/components/admin/AppointmentManagement'
 import PatientManagement from '@/components/admin/PatientManagement'
+import ChatManagement from '@/components/admin/ChatManagement'
+import ChatWidget from '@/components/chat/ChatWidget'
 import { Menu, Stethoscope } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 type View = 'public' | 'admin'
-type AdminTab = 'dashboard' | 'dentists' | 'appointments' | 'patients'
+type AdminTab = 'dashboard' | 'dentists' | 'appointments' | 'patients' | 'chats'
 
 export default function Home() {
   const [view, setView] = useState<View>('public')
@@ -128,6 +130,7 @@ export default function Home() {
               <Contact />
             </main>
             <Footer onAdminClick={handleAdminClick} />
+            <ChatWidget />
           </motion.div>
         ) : (
           <motion.div
@@ -150,7 +153,7 @@ export default function Home() {
                   mobileOpen={mobileMenuOpen}
                   onMobileClose={() => setMobileMenuOpen(false)}
                 />
-                <div className="flex-1 flex flex-col min-h-screen lg:min-h-0">
+                <div className="flex-1 flex flex-col min-h-screen lg:min-h-0 min-w-0">
                   {/* Mobile Header - only visible on small screens */}
                   <header className="lg:hidden sticky top-0 z-30 bg-white border-b border-dental-100 px-4 py-3 flex items-center justify-between shadow-sm">
                     <div className="flex items-center gap-3">
@@ -176,7 +179,7 @@ export default function Home() {
                   </header>
 
                   {/* Main content */}
-                  <main className="flex-1 p-4 md:p-8 bg-gray-50/50 overflow-auto">
+                  <main className="flex-1 min-w-0 p-4 md:p-8 bg-gray-50/50 overflow-auto">
                     <AnimatePresence mode="wait">
                       {adminTab === 'dashboard' && (
                         <motion.div
@@ -220,6 +223,17 @@ export default function Home() {
                           transition={{ duration: 0.2 }}
                         >
                           <PatientManagement token={token} />
+                        </motion.div>
+                      )}
+                      {adminTab === 'chats' && (
+                        <motion.div
+                          key="chats"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <ChatManagement token={token} />
                         </motion.div>
                       )}
                     </AnimatePresence>

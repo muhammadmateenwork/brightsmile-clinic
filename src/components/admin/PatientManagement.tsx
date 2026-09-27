@@ -63,6 +63,7 @@ function formatDate(dateStr: string) {
 
 function formatTime(time: string) {
   if (!time) return 'N/A'
+  if (/am|pm/i.test(time)) return time
   try {
     const [h, m] = time.split(':')
     const hour = parseInt(h)

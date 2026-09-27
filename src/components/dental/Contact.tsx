@@ -20,23 +20,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { useToast } from '@/hooks/use-toast'
-
-const CLINIC_ADDRESS = {
-  street: '123 Dental Avenue, Suite 200',
-  city: 'New York, NY 10001',
-  country: 'United States',
-  full: '123 Dental Avenue, Suite 200, New York, NY 10001, United States',
-  phone: '+1 (555) 123-4567',
-  email: 'hello@brightsmile.com',
-  googleMapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=123+Dental+Avenue+New+York+NY+10001',
-  googleMapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.74076794379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sGoogle!5e0!3m2!1sen!2sus!4v1623456789!5m2!1sen!2sus',
-}
-
-const workingHours = [
-  { day: 'Monday – Friday', time: '8:00 AM – 6:00 PM', days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] },
-  { day: 'Saturday', time: '9:00 AM – 4:00 PM', days: ['Saturday'] },
-  { day: 'Sunday', time: 'Closed', days: ['Sunday'] },
-]
+import { CLINIC_ADDRESS, WORKING_HOURS as workingHours } from '@/lib/clinicInfo'
 
 export default function Contact() {
   const [loading, setLoading] = useState(false)
